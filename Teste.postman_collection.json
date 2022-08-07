@@ -1,0 +1,448 @@
+{
+	"info": {
+		"_postman_id": "16af8a4e-aa4b-41a9-9830-91bb681def22",
+		"name": "Teste",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22668062"
+	},
+	"item": [
+		{
+			"name": "Listar Usuarios Cadastrados",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.variables.set (\"schema\",\r",
+							"    {\r",
+							"        \"type\": \"object\",\r",
+							"        \"required\": [\r",
+							"            \"quantidade\",\r",
+							"            \"usuarios\"\r",
+							"        ],\r",
+							"        \"properties\": {\r",
+							"            \"quantidade\": {\r",
+							"                \"type\": \"integer\",\r",
+							"            },\r",
+							"            \"usuarios\": {\r",
+							"                \"type\": \"array\",\r",
+							"                \"items\": {\r",
+							"                    \"type\": \"object\",\r",
+							"                    \"required\": [\r",
+							"                        \"nome\",\r",
+							"                        \"email\",\r",
+							"                        \"password\",\r",
+							"                        \"administrador\",\r",
+							"                        \"_id\"\r",
+							"                    ],\r",
+							"                    \"properties\": {\r",
+							"                        \"nome\":{\"type\": \"string\"},\r",
+							"                        \"email\":{\"type\": \"string\"},\r",
+							"                        \"password\":{\"type\": \"string\"},\r",
+							"                        \"administrador\":{\"type\": \"string\"},\r",
+							"                        \"_id\":{\"type\": \"string\"},\r",
+							"                    }\r",
+							"                }\r",
+							"            }\r",
+							"        },\r",
+							"    }\r",
+							")\r",
+							"pm.test(\"must return a response with valid Schema\", function () {\r",
+							"    var jsonData = pm.response.json(); \r",
+							"    var schema = pm.variables.get(\"schema\"); \r",
+							"    var isSchemaValid = tv4.validate(jsonData, schema);\r",
+							"    if(!isSchemaValid)\r",
+							"        console.error(tv4.error);\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://serverest.dev/usuarios",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar usuário",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Fulano da Silva\",\r\n  \"email\": \"inapo@qa.com.br\",\r\n  \"password\": \"teste\",\r\n  \"administrador\": \"true\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar usuário Duplicado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    \r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Este email já está sendo usado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nome\": \"Coope Brekke\",\r\n    \"email\": \"Jo62@gmail.com\",\r\n    \"password\": \"ftxjxeHbu4Ufuq\",\r\n    \"administrador\": \"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar usuário por ID não encontrado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Usuário não encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios/ 0uxuPY0cbmQhpEz1",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						" 0uxuPY0cbmQhpEz1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar usuário por ID não encontrado Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios/77Vol6X9zvFWkEpM",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						"77Vol6X9zvFWkEpM"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir usuário",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://serverest.dev/usuarios/0uxuPY0cbmQhpEz1",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						"0uxuPY0cbmQhpEz1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar usuário/usado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Coope Brekke\",\r\n  \"email\": \"Jo62@gmail.com\",\r\n  \"password\": \"ftxjxeHbu4Ufuq\",\r\n  \"administrador\": \"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios/0uxuPY0cbmQhpEz1",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						"0uxuPY0cbmQhpEz1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar usuário/alterado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Coope Brekke\",\r\n  \"email\": \"Jo62@gmail.com\",\r\n  \"password\": \"ftxjxeHbu4Ufuq\",\r\n  \"administrador\": \"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios/0uxuPY0cbmQhpEz1",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						"0uxuPY0cbmQhpEz1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar usuário/cadastro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Abagail\",\r\n    \"email\": \"Do31@yahoo.com\",\r\n    \"password\": \"iXcVcpc7QIrKhmQ\",\r\n    \"administrador\": \"true\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios/0uxuPY0cbmQhpEz1",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						"0uxuPY0cbmQhpEz1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"response time should be less than 1 second\", function () {",
+					" pm.expect(pm.response.responseTime).to.be.below(1000);",
+					"});"
+				]
+			}
+		}
+	]
+}
