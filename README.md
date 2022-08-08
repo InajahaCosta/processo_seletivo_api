@@ -4,7 +4,7 @@
 
 # Teste API ServeRest
 
-Para esse teste de automação utilizando a API pública ServeRest contruindo cenários de teste, dado a funcionalidade abaixo:
+Para esse teste de automação foi utilizando a API pública ServeRest contruindo cenários de teste, dado a funcionalidade abaixo:
 
 - Funcionalidade: Eu, como usuario, devo realizar o CRUD: 
   <p>GET - Listar usuarios</p>
