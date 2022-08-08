@@ -8,10 +8,10 @@ Para esse teste de automação utilizando a API pública ServeRest contruindo ce
 
 - Funcionalidade: Eu, como usuario, devo realizar o CRUD: 
   <p>GET - Listar usuarios</p>
-  POST - Cadastrar usuarios
-  GET - Buscar usuario por ID
-  DELETE - Excluir usuario
-  PUT - Editar usuario
+  <p>POST - Cadastrar usuarios</p>
+  <p>GET - Buscar usuario por ID</p>
+  <p>DELETE - Excluir usuario</p>
+  PUT - Editar usuario</p>
 ## Instalação e Execução
 ### Requerimentos
 
