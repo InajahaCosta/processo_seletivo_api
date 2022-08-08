@@ -16,12 +16,16 @@ Para esse teste de automação foi utilizando a API pública ServeRest contruind
 ### Requerimentos
 
 -   [git](https://git-scm.com/downloads)
+-   [Postman] (https://www.postman.com)
 -   [node 14+](https://nodejs.org/en/)
     -   ou use [nvm](https://github.com/nvm-sh/nvm) para gerenciar múltiplas versões do NodeJS
 ## Servidor REST API
 Como neste projeto foi utilizado o servidor ServeRest, o mesmo é necessário para que os testes sejam executados.
 > Para as instruções de como iniciar o servidor REST, siga a documentação do projeto [ServeRest](https://github.com/PauloGoncalvesBH/ServeRest#consumindo-o-serverest)
 
+## Testes
+Para realizar os testes foi utilizado a plataforma Postman de API para desenvolvedores nela e possivel projetar, construir, testar e iterar  APIs.
+[Postman] (https://www.postman.com)
 
 #### Clonando reposiótorio
 
