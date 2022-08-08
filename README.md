@@ -7,7 +7,7 @@
 Para esse teste de automação utilizando a API pública ServeRest contruindo cenários de teste, dado a funcionalidade abaixo:
 
 - Funcionalidade: Eu, como usuario, devo realizar o CRUD: 
-  GET - Listar usuarios
+  <p>GET - Listar usuarios</p>
   POST - Cadastrar usuarios
   GET - Buscar usuario por ID
   DELETE - Excluir usuario
