@@ -26,7 +26,7 @@ Como neste projeto foi utilizado o servidor ServeRest, o mesmo é necessário pa
 #### Clonando reposiótorio
 
 ```text
-git clone https://github.com/ltsuda/pytest-serverest-study.git
+git clone https://github.com/InajahaCosta/processo_seletivo_api
 ```
 
 #
